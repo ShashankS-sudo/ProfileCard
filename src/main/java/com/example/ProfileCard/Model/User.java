@@ -1,5 +1,6 @@
 package com.example.ProfileCard.Model;
 
+import com.example.ProfileCard.DTO.UpdateResponseRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +22,7 @@ public class User implements UserDetails {
 
     private String name;
     private int age;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String country;
     private String state;
@@ -31,9 +33,18 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
     private String password;
+    private Integer tokenVersion = 0;
 
     @Lob
     private byte[] image;
+
+    public void update(UpdateResponseRequest updateResponseRequest) {
+        this.name = updateResponseRequest.getName();
+        this.age = updateResponseRequest.getAge();
+        this.gender = updateResponseRequest.getGender();
+        this.state = updateResponseRequest.getState();
+        this.country = updateResponseRequest.getCountry();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

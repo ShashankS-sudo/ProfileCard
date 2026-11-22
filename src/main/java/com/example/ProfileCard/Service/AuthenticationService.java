@@ -45,13 +45,22 @@ public class AuthenticationService {
     }
 
     public LoginResponse login(LoginUser loginUser) {
+
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginUser.getEmail(),
                         loginUser.getPassword()
                 )
         );
-        String token = jwtService.generateToken(loginUser.getEmail());
+
+        User user = repo.findByEmail(auth.getName())
+                .orElseThrow();
+
+        String token = jwtService.generateToken(
+                user.getEmail(),
+                user.getTokenVersion()
+        );
+
         return new LoginResponse(token);
     }
 }

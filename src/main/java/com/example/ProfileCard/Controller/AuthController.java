@@ -7,6 +7,7 @@ import com.example.ProfileCard.Exception.EmailAlreadyExistsException;
 import com.example.ProfileCard.Model.User;
 import com.example.ProfileCard.Service.AuthenticationService;
 import com.example.ProfileCard.Service.ProfileService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(
-            @RequestBody RegisterUser registerUser) {
+            @Valid @RequestBody RegisterUser registerUser) {
 
         if (service.emailExists(registerUser.getEmail())) {
             throw new EmailAlreadyExistsException(
@@ -36,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginUser loginUser) {
+    public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginUser loginUser) {
         return ResponseEntity.ok(authenticationService.login(loginUser));
     }
 }

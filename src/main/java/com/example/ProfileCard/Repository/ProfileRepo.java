@@ -13,4 +13,5 @@ public interface ProfileRepo extends JpaRepository<User, Long> {
     public Optional<User> findByEmail(String username);
 
     boolean existsByEmail(String email);
+    void deleteByEmail(String email);
 }
