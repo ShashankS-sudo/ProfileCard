@@ -5,9 +5,10 @@ import com.example.ProfileCard.Exception.UserNotFoundException;
 import com.example.ProfileCard.Model.User;
 import com.example.ProfileCard.Service.ProfileService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,12 +24,8 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<AdminUserResponse>> getUsers() {
-        List<AdminUserResponse> users = service.findAll()
-                .stream()
-                .map(AdminUserResponse::new)
-                .toList();
-
+    public ResponseEntity<Page<AdminUserResponse>> getUsers(Pageable page) {
+        Page<AdminUserResponse> users = service.getUsers(page).map(AdminUserResponse::new);
         return ResponseEntity.ok(users);
     }
 }
