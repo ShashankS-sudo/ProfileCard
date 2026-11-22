@@ -23,9 +23,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(
             @RequestBody RegisterUser registerUser) {
-        User user = service.findByEmail(registerUser.getEmail());
 
-        if (user != null) {
+        if (service.emailExists(registerUser.getEmail())) {
             throw new EmailAlreadyExistsException(
                     "An account with this email already exists"
             );

@@ -12,7 +12,10 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ExceptionHandler({
+            EmailAlreadyExistsException.class,
+            UserNotFoundException.class
+    })
     public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(
             EmailAlreadyExistsException ex,
             HttpServletRequest request) {

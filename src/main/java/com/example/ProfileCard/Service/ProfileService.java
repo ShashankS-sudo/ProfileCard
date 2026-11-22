@@ -34,10 +34,12 @@ public class ProfileService {
     }
 
     public User findByEmail(@NonNull @Email @NotBlank String email) {
-        return repo.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User not found")
-        );
+        return repo.findByEmail(email).orElseThrow();
     };
+
+    public boolean emailExists(String email) {
+        return repo.existsByEmail(email);
+    }
 
     public MyProfileResponse getMyProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

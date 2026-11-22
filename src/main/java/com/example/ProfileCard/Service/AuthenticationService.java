@@ -38,7 +38,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(registerUser.getPassword()))
                 .panNumber(registerUser.getPanNumber())
                 .driversLicense(registerUser.getDriversLicense())
-                .role(Role.User)
+                .role(Role.USER)
                 .build();
 
         repo.save(user);
